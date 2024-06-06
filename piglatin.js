@@ -1,19 +1,46 @@
-console.log('hallo');
 
-const args = process.argv;
-const string = 'string';
+//saving input to the variable args ---> node path arg arg arg ...
+const [node, file, ...args] = process.argv;
+//creating empty array
+const translated=[];
 
-function allLetter(args)
-      { 
-      var letters = /^[A-Za-z]+$/;
-      if(args.value.match(letters))
-      {
-      alert('You use only letters!');
-      return true;
+
+
+for (let i = 0; i < args.length; i++) {
+      if (args[i].match(/^[aeiouy]/)) {
+        //starts with vowel                     /^[aeiouy]/
+        //prints word + way                     ^ - matches the beginning of the string
+        //example: is + way = isway             [aeiouy] - with the letters 'a,e,i,o,u,y'
+
+
+        translated[i] = args[i].replace(/(.+)/, "$1way");
+        //                                       /(.+)/, "$1way
+        //                                      (.+) - groups ($1) the letters together
+        //                                      $1way - prints the group of the letters, adds 'way'
+
+
+      } else if (args[i].match(/[aeiouy]/g)) {
+        //starts with a consonant and a vowel,                                      /[aeiouy]/g -looks for the vowel in the whole string
+        //prints first letter of the word at the end of the word and adds 'ay'      g - global search in a string
+        //example: 'hard' = ardhay
+
+        
+        translated[i] =  args[i].replace(/(^[^aeiouy]+)(.+)/g, "$2$1ay");
+        //                                      /(^[^aeiouy]+) - creates a $1 group that matches any character that isn't in the set
+        //                                      (.+)/g - creates a $2 second group of the remaining letters 
+        //                                      "$2$1ay" - prints the $2 second group, prints the $1 first group, adds 'ay'
+      } else {
+        //word starts with two consonants
+        //prints first two letters of the word at the end of the word and add 'ay'
+        //example: 'speak' = eakspay
+        translated[i] = args[i] + "ay";
+        
       }
-      else
-      {
-      alert('Please input alphabet characters only');
-      return false;
-      }
-      }
+    }
+
+//adding space to the array instead of default comma 
+    const translatedString = translated.join(' ');
+
+    console.log('Your input: '+ args.join(' '));
+    console.log('Translation: ' + translatedString);
+
