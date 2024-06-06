@@ -20,22 +20,17 @@ for (let i = 0; i < args.length; i++) {
 
 
       } else if (args[i].match(/[aeiouy]/g)) {
-        //starts with a consonant and a vowel,                                      /[aeiouy]/g -looks for the vowel in the whole string
-        //prints first letter of the word at the end of the word and adds 'ay'      g - global search in a string
+        //starts with a consonant and a vowel OR starts with two consonants,        /[aeiouy]/g -looks for the vowel in the whole string
+        //prints first consonant OR first two consonants  of the word at the end and adds 'ay'      g - global search in a string
         //example: 'hard' = ardhay
-
+        //example2: 'speak' = eakspay
         
         translated[i] =  args[i].replace(/(^[^aeiouy]+)(.+)/g, "$2$1ay");
         //                                      /(^[^aeiouy]+) - creates a $1 group that matches any character that isn't in the set
         //                                      (.+)/g - creates a $2 second group of the remaining letters 
         //                                      "$2$1ay" - prints the $2 second group, prints the $1 first group, adds 'ay'
-      } else {
-        //word starts with two consonants
-        //prints first two letters of the word at the end of the word and add 'ay'
-        //example: 'speak' = eakspay
-        translated[i] = args[i] + "ay";
-        
-      }
+      } 
+      
     }
 
 //adding space to the array instead of default comma 
